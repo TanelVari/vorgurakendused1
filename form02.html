@@ -1,0 +1,74 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Võrgurakendused I, nädal 2 - kodutöö</title>
+  <meta name="description" content="Võrgurakendused I, kodutöö 2">
+  <meta name="author" content="Tanel Vari">
+
+</head>
+
+<body>
+
+<form action="form01.html" method="POST">
+
+  <table border="1" cellpadding="5" cellspacing="1">
+    <tr>
+      <th>Küsimus</th>
+      <th>Vastus</th>
+    </tr>
+
+    <tr>
+      <td>Eesnimi:</td>
+      <td><input type="text" name="eesnimi" /></td>
+    </tr>
+    <tr>
+      <td>Perekonnanimi:</td>
+      <td><input type="text" name="perenimi" /></td>
+    </tr>
+    <tr>
+      <td>Vanus:</td>
+      <td><input type="number" name="vanus" /></td>
+    </tr>
+    <tr>
+        <td>Aeg:</td>
+        <td><input type="datetime-local" name="hetkeaeg" /></td>
+    </tr>
+    <tr>
+        <td>Sugu:</td>
+        <td>
+          <input type="radio" name="sugu" id="mees" value="mees" /><label for="mees">mees</label><br />
+          <input type="radio" name="sugu" id="naine" value="naine" /><label for="naine">naine</label><br />
+          <input type="radio" name="sugu" id="lgtb" value="midagi muud" /><label for="lgtb">midagi muud</label>
+        </td>
+    </tr>
+    <tr>
+        <td>Pikem jutt:</td>
+        <td><textarea name="muinasjutt" maxlength="140" rows="5" cols="40">Siia tuleb muinasjutt</textarea></td>
+    </tr>
+    <tr>
+        <td>Selektsioon:</td>
+        <td>
+          <select>
+            <option value="koer">Koer</option>
+            <option value="kass">Kass</option>
+            <option value="hamster">Hamster</option>
+            <option value="hüljes">Hüljes</option>
+          </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Meili soovin?</td>
+        <td><input type="checkbox" checked name="spam" /></td>
+    </tr>
+    <tr>
+        <td colspan="2"><input type="submit" value="saada"></td>
+    </tr>
+  </table>
+
+</form>
+
+</body>
+</html>
