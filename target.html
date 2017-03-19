@@ -88,6 +88,18 @@
 			bottom: 0;
 		}
 	</style>
+
+	<script>
+	
+		window.onload = function(){
+			target_container = document.getElementById("container");
+			target_container.onclick = function(){
+				target_container.style.left = Math.floor(Math.random() * 300) + 1 + 'px';
+				target_container.style.top = Math.floor(Math.random() * 300) + 1 + 'px';
+			}
+		}
+
+	</script>
 </head>
 <body>
 
