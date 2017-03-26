@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Kodune töö - jQuery</title>
+
+	<style type="text/css">
+		.active {
+			background-color: #F00;
+		}
+	</style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+	<script>
+
+  var activeElement;
+
+  $(function(){
+    $("li").first().addClass("active");
+    activeElement = $("li").first();
+
+    $("#backButton").click(function(){
+      if ($(activeElement).is(":first-child")){
+        switchClass($("li").last());
+      } else {
+        switchClass($(activeElement).prev());
+      }
+    });
+
+    $("#forwardButton").click(function(){
+        if ($(activeElement).is(":last-child")){
+          switchClass($("li").first());
+        } else {
+          switchClass($(activeElement).next());
+        }
+    });
+  });
+
+  function switchClass(next){
+    $(activeElement).toggleClass("active");
+    $(next).toggleClass("active");
+    activeElement = next;
+  }
+
+	</script>
+</head>
+<body>
+
+  <div>
+    <ul>
+      <li>Esimene listielement</li>
+      <li>Teine listielement</li>
+      <li>Kolmas listielement</li>
+      <li>Neljas listielement</li>
+      <li>Viies listielement</li>
+      <li>Kuues listielement</li>
+      <li>Seitsmes listielement</li>
+      <li>Kaheksas listielement</li>
+      <li>Üheksas listielement</li>
+      <li>Kümnes listielement</li>
+      <li>Üheteistkümnes listielement</li>
+      <li>Kaheteistkümnes listielement</li>
+    </ul>
+
+    <div>
+      <button id="backButton">&lt; tagasi</button>
+      <button id="forwardButton">edasi &gt;</button>
+    </div>
+
+  </div>
+
+</body>
+</html>
