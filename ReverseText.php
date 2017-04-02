@@ -2,20 +2,19 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>Kodune töö 4a</title>
-	<style type="text/css"></style>
-	<script>
-
-		window.onload = function(){
-			<?php
-				$my_string = "Seitsmendas loengus tutvusime PHPga";
-
-				for ($i=$my_string.length(); $i = 0 ; $i--)) {
-					echo "$mystring[$i]";
-				}
-		}
-
-	</script>
+	<title>Kodune töö PHP</title>
 </head>
-<body></body>
+<body>
+<?php
+    $my_string = "Seitsmendas loengus tutvusime PHPga.";
+
+    echo "<div><p>";
+
+    for ($i = strlen($my_string); $i >= 0; $i--){
+        echo substr($my_string,$i,1);
+    }
+
+    echo "</p></div>";
+?>
+</body>
 </html>
