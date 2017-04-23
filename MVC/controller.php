@@ -1,4 +1,7 @@
 <?php
+
+    session_start();
+
     $page = "";
 
     $folder = "pildid/";
@@ -12,6 +15,14 @@
 
     if (!empty($_GET['page'])){
         $page = $_GET['page'];
+    }
+
+    function end_my_session(){
+        if(isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '',time()-42000, '/');
+        }
+        $_SESSION = array();
+        session_destroy();
     }
 ?>
 
@@ -31,6 +42,10 @@
             break;
         case "result":
             include_once("tulemus.php");
+            break;
+        case "end_session":
+            end_my_session();
+            include_once("pealeht.php");
             break;
         default:
             include_once("pealeht.php");
