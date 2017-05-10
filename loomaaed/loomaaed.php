@@ -12,7 +12,7 @@ if (!isset($errors)) {
 $page="pealeht";
 
 if (isset($_GET['page']) && $_GET['page']!=""){
-	$page=htmlspecialchars($_GET['page']);
+	$page = htmlspecialchars($_GET['page']);
 }
 
 include_once('views/head.html');
@@ -20,16 +20,19 @@ include_once('views/head.html');
 switch($page){
 	case "login":
 		logi();
-	break;
+	    break;
 	case "loomad":
 		kuva_puurid();
-	break;
+	    break;
 	case "logout":
 		logout();
-	break;
-	case "lisa":
-		lisa();
-	break;
+	    break;
+    case "lisa":
+        lisa();
+        break;
+    case "muuda":
+        muuda();
+        break;
 	default:
 		include_once('views/v2rav.html');
 	break;

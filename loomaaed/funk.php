@@ -41,6 +41,7 @@ function logi(){
 
                 $row = mysqli_fetch_assoc($result);
                 $_SESSION['user'] = $row['username'];
+                $_SESSION['role'] = $row['roll'];
 
                 header("Location: ?page=loomad");
                 die();
@@ -95,13 +96,10 @@ function lisa(){
     global $connection;
     global $errors;
 
+    check_admin_permissions();
+
     if (empty($loom)){
         $loom = array();
-    }
-
-    if (!isset($_SESSION['user'])){
-        header("Location: ?page=login");
-        die();
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['add_animal'])){
@@ -114,6 +112,9 @@ function lisa(){
 
         if (empty($_POST['puur'])){
             $errors[] = 'Puur on määramata';
+        }
+        else if (intval($_POST['puur']) <= 0) {
+            $errors[] = 'Miinusega puurid on ainult jääkarudele';
         }
         else {
             $loom['puur'] = htmlspecialchars($_POST['puur']);
@@ -154,6 +155,120 @@ function lisa(){
     }
     else {
         include_once('views/loomavorm.html');
+    }
+}
+
+function muuda(){
+    global $connection;
+    global $errors;
+
+    check_admin_permissions();
+
+    if (isset($_GET['id']) && $_GET['id']!=""){
+
+        // gets the array for the animal - no initialization neccessary
+        $loom = hangi_loom(intval($_GET['id']));
+
+        if ($loom == null){
+            header("Location: ?page=loomad");
+            die();
+        }
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['change_animal'])){
+
+        if (empty($_POST['id'])){
+            header("Location: ?page=loomad");
+            die();
+        }
+        else {
+            $loom['id'] = htmlspecialchars($_POST['id']);
+        }
+
+        if (empty($_POST['nimi'])){
+            $errors[] = 'Looma nimi on puudu';
+        }
+        else {
+            $loom['nimi'] = htmlspecialchars($_POST['nimi']);
+        }
+
+        if (empty($_POST['puur'])){
+            $errors[] = 'Puur on määramata';
+        }
+        else if (intval($_POST['puur']) <= 0) {
+            $errors[] = 'Miinusega puurid on ainult jääkarudele';
+        }
+        else {
+            $loom['puur'] = htmlspecialchars($_POST['puur']);
+        }
+
+        if ($_FILES['liik']['error'] == 4){
+            if (!empty($_POST['default_liik'])){
+                $loom['liik'] = htmlspecialchars($_POST['default_liik']);
+            }
+        }
+        else {
+            $upload_result = upload("liik");
+
+            if ( $upload_result == ""){
+                $errors[] = 'Viga näofaili üleslaadimisel';
+            }
+            else {
+                $loom['liik'] = htmlspecialchars($upload_result);
+            }
+        }
+
+        // if errors
+        if (!empty($errors)){
+            include_once('views/editvorm.html');
+            die();
+        }
+        else {
+            $id   = mysqli_real_escape_string($connection, $loom['id']);
+            $nimi = mysqli_real_escape_string($connection, $loom['nimi']);
+            $puur = mysqli_real_escape_string($connection, $loom['puur']);
+            $liik = mysqli_real_escape_string($connection, $loom['liik']);
+
+            $sql = "UPDATE tvari_vorgurakendus1_test_loomaaed SET nimi='".$nimi."', puur=".$puur.", liik='".$liik."' WHERE id=".$id;
+            $result = mysqli_query($connection, $sql);
+
+            if ($result){
+                header("Location: ?page=loomad");
+                die();
+            }
+            else{
+                $errors[] = 'Looma muutmine ebaõnnestus';
+                include_once('views/editvorm.html');
+                die();
+            }
+        }
+    }
+    else {
+        include_once('views/editvorm.html');
+    }
+}
+
+function hangi_loom($id){
+    global $connection;
+
+    $id = mysqli_real_escape_string($connection, $id);
+
+    $sql = "SELECT * FROM tvari_vorgurakendus1_test_loomaaed WHERE id=".$id;
+    $result = mysqli_query($connection, $sql);
+
+    return ($result && mysqli_num_rows($result) == 1) ? mysqli_fetch_assoc($result) : null;
+}
+
+function check_admin_permissions(){
+
+    if (!isset($_SESSION['user']) || !isset($_SESSION['role'])){
+        header("Location: ?page=loomad");
+        die();
+    }
+
+    if ($_SESSION['role'] != 'admin'){
+        header("Location: ?page=loomad");
+        die();
     }
 }
 
