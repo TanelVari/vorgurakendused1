@@ -12,7 +12,7 @@
 		<?php if(isset($_SESSION['user'])): ?>
 			<li><a href="?page=loomad">Loomad</a></li>
 
-			<?php if(isset($_SESSION['user']) && $_SESSION['role'] == 'admin'): ?>
+			<?php if(isset($_SESSION['user']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
 				<li><a href="?page=lisa">Lisa loomi</a></li>
 			<?php endif; ?>
 

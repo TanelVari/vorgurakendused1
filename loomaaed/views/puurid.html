@@ -8,12 +8,12 @@
 
 <?php
     foreach($puur as $loom){
-        if(isset($_SESSION['user']) && $_SESSION['role'] == 'admin'){
+        if(isset($_SESSION['user']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin'){
             echo "<a href=\"?page=muuda&id={$loom['id']}\">";
         }
         echo "<img src=\"{$loom['liik']}\" alt=\"{$loom['nimi']}\" />";
 
-        if(isset($_SESSION['user']) && $_SESSION['role'] == 'admin'){
+        if(isset($_SESSION['user']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin'){
             echo "</a>";
         }
 
